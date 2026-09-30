@@ -4,63 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>O Senhor do Violino</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Outfit:wght@400;500&display=swap" />
   <style>
-    :root {
-      --hall: #100e0c;
-      --ink: #f4ecdf;
-      --gold: #c4a574;
-      --mute: #a89880;
-      --seal: #c42121;
-      --seal-deep: #6e1010;
-    }
+    :root { --hall:#100e0c; --ink:#f4ecdf; --gold:#c4a574; --seal:#c42121; --seal-deep:#6e1010; }
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; background: var(--hall); color: var(--ink); font-family: Outfit, system-ui, sans-serif; }
+    html, body { height:100%; margin:0; background:var(--hall); color:var(--ink); font-family: Georgia, serif; }
     .hall {
-      min-height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem 1rem 2rem;
-      background: radial-gradient(ellipse 70% 50% at 50% 18%, rgb(196 165 116 / 0.14), transparent 60%), var(--hall);
+      min-height:100%; display:flex; align-items:center; justify-content:center; padding:1.5rem 1rem 2rem;
+      background: radial-gradient(ellipse 70% 50% at 50% 18%, rgb(196 165 116 / .14), transparent 60%), var(--hall);
     }
-    .stage { width: min(92vw, 26rem); text-align: center; }
-    .kicker {
-      margin: 0 0 1.4rem;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-size: 0.95rem;
-    }
+    .stage { width:min(92vw, 26rem); text-align:center; }
+    .kicker { margin:0 0 1.4rem; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); font-size:.95rem; }
     .seal {
-      appearance: none; border: 0; border-radius: 999px;
-      padding: 0.95rem 2.4rem; min-height: 3rem;
-      font: 500 1rem Outfit, system-ui, sans-serif;
-      letter-spacing: 0.12em; text-transform: lowercase; color: var(--ink);
+      appearance:none; border:0; border-radius:999px; padding:.95rem 2.4rem; min-height:3rem; cursor:pointer;
+      font: 500 1rem system-ui, sans-serif; letter-spacing:.12em; color:var(--ink);
       background: radial-gradient(circle at 30% 20%, #e23b3b, var(--seal) 46%, var(--seal-deep));
-      box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12), 0 12px 28px rgb(196 33 33 / 0.38);
-      cursor: pointer;
     }
-    .seal:hover { transform: translateY(-2px); filter: brightness(1.06); }
-    .seal.is-gone { opacity: 0; pointer-events: none; position: absolute; }
-    .reveal { display: none; }
-    .reveal.is-on { display: block; }
-    .portrait {
-      display: block; width: 100%; max-height: min(62vh, 34rem);
-      object-fit: cover; object-position: center 18%;
-      border-radius: 0.7rem;
-      box-shadow: 0 0 0 1px rgb(196 165 116 / 0.22), 0 28px 70px rgb(0 0 0 / 0.55);
+    .seal.is-gone { display:none; }
+    .reveal { display:none; }
+    .reveal.is-on { display:block; }
+    video {
+      display:block; width:100%; max-height:min(70vh, 36rem); border-radius:.7rem; background:#100e0c;
+      box-shadow: 0 0 0 1px rgb(196 165 116 / .22), 0 28px 70px rgb(0 0 0 / .55);
     }
-    .caption { margin: 0.85rem 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.25rem; color: var(--gold); }
-    .row { display: none; gap: 0.55rem; justify-content: center; margin-top: 1rem; }
-    .row.is-on { display: flex; }
+    .caption { margin:.85rem 0 0; font-style:italic; font-size:1.25rem; color:var(--gold); }
+    .row { display:none; gap:.55rem; justify-content:center; margin-top:1rem; }
+    .row.is-on { display:flex; }
     .ghost {
-      min-height: 2.75rem; padding: 0.4rem 0.95rem; border-radius: 999px;
-      border: 1px solid rgb(196 165 116 / 0.4); background: transparent; color: var(--gold);
-      font: 400 0.8rem Outfit, system-ui, sans-serif; letter-spacing: 0.08em; cursor: pointer;
+      min-height:2.75rem; padding:.4rem .95rem; border-radius:999px; cursor:pointer;
+      border:1px solid rgb(196 165 116 / .4); background:transparent; color:var(--gold);
+      font: .8rem system-ui, sans-serif; letter-spacing:.08em;
     }
-    .note { margin: 0.7rem 0 0; color: var(--mute); font-size: 0.75rem; }
   </style>
 </head>
 <body>
@@ -69,141 +42,51 @@
       <p class="kicker" id="kicker">uma nota apenas</p>
       <button class="seal" id="seal" type="button">carregar</button>
       <div class="reveal" id="reveal">
-        <img class="portrait" alt="Senhor a tocar violino" src="senhor-violino.jpg" />
+        <video id="film" playsinline loop preload="auto" src="violino.mp4"></video>
         <p class="caption">um senhor a tocar violino</p>
       </div>
       <div class="row" id="row">
-        <button class="ghost" id="toggle" type="button">pausar som</button>
+        <button class="ghost" id="toggle" type="button">pausar</button>
         <button class="ghost" id="reset" type="button">voltar</button>
       </div>
-      <p class="note" id="note" hidden>melodia local — o disco não carregou</p>
     </div>
   </main>
   <script>
-    const RECORDING = "https://archive.org/download/SadViolinPart1/SadViolin.mp3";
-    const PHRASE = [[293.66,1.6],[349.23,1.1],[440,1.2],[587.33,2.2],[523.25,1.5],[440,1.1],[392,1.2],[349.23,1.6],[329.63,1.4],[293.66,2.6]];
     const seal = document.getElementById("seal");
     const reveal = document.getElementById("reveal");
     const row = document.getElementById("row");
     const kicker = document.getElementById("kicker");
+    const film = document.getElementById("film");
     const toggle = document.getElementById("toggle");
-    const note = document.getElementById("note");
-    let audio = null, synth = null, source = null, paused = false;
-
-    function startSynth() {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AC();
-      ctx.resume();
-      const master = ctx.createGain();
-      master.gain.value = 0.2;
-      const filter = ctx.createBiquadFilter();
-      filter.type = "lowpass";
-      filter.frequency.value = 1600;
-      filter.connect(master);
-      master.connect(ctx.destination);
-      const phraseLen = PHRASE.reduce((s, n) => s + n[1], 0);
-      const t0 = ctx.currentTime + 0.06;
-      for (let loop = 0; loop < 8; loop++) {
-        let t = t0 + loop * phraseLen;
-        for (const [freq, dur] of PHRASE) {
-          const osc = ctx.createOscillator();
-          const harm = ctx.createOscillator();
-          const gain = ctx.createGain();
-          const harmGain = ctx.createGain();
-          const vib = ctx.createOscillator();
-          const vibGain = ctx.createGain();
-          osc.type = "triangle";
-          harm.type = "sine";
-          osc.frequency.value = freq;
-          harm.frequency.value = freq * 2;
-          vib.frequency.value = 5.2;
-          vibGain.gain.value = freq * 0.012;
-          vib.connect(vibGain);
-          vibGain.connect(osc.frequency);
-          harmGain.gain.value = 0.12;
-          gain.gain.setValueAtTime(0.0001, t);
-          gain.gain.exponentialRampToValueAtTime(0.85, t + 0.09);
-          gain.gain.exponentialRampToValueAtTime(0.55, t + dur * 0.65);
-          gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-          osc.connect(gain);
-          harm.connect(harmGain);
-          harmGain.connect(gain);
-          gain.connect(filter);
-          osc.start(t); harm.start(t); vib.start(t);
-          const end = t + dur + 0.02;
-          osc.stop(end); harm.stop(end); vib.stop(end);
-          t += dur;
-        }
-      }
-      const killAt = setTimeout(() => ctx.close(), (phraseLen * 8 + 1) * 1000);
-      return { stop() { clearTimeout(killAt); ctx.close(); } };
-    }
-
-    function playLocal() {
-      if (audio) audio.pause();
-      if (synth) synth.stop();
-      synth = startSynth();
-      source = "local";
-      paused = false;
-      toggle.textContent = "pausar som";
-      note.hidden = false;
-    }
-
-    async function playRecording() {
-      if (!audio) {
-        audio = new Audio(RECORDING);
-        audio.loop = true;
-        audio.volume = 0.85;
-        audio.addEventListener("error", () => { if (audio.paused) playLocal(); });
-      }
-      try {
-        if (synth) { synth.stop(); synth = null; }
-        audio.currentTime = 0;
-        await audio.play();
-        source = "disco";
-        paused = false;
-        toggle.textContent = "pausar som";
-        note.hidden = true;
-        setTimeout(() => {
-          if (audio.paused || audio.currentTime > 0.05) return;
-          playLocal();
-        }, 2500);
-      } catch (e) {
-        playLocal();
-      }
-    }
 
     seal.addEventListener("click", () => {
       seal.classList.add("is-gone");
       reveal.classList.add("is-on");
       row.classList.add("is-on");
       kicker.textContent = "adagio";
-      playRecording();
+      toggle.textContent = "pausar";
+      film.muted = false;
+      film.currentTime = 0;
+      film.play();
     });
 
     toggle.addEventListener("click", () => {
-      if (source === "disco" && audio && !audio.paused) {
-        audio.pause(); paused = true; toggle.textContent = "tocar som"; return;
+      if (film.paused) {
+        film.play();
+        toggle.textContent = "pausar";
+      } else {
+        film.pause();
+        toggle.textContent = "tocar";
       }
-      if (source === "local" && synth && !paused) {
-        synth.stop(); synth = null; paused = true; toggle.textContent = "tocar som"; return;
-      }
-      if (source === "disco") {
-        audio.play().then(() => { paused = false; toggle.textContent = "pausar som"; }).catch(playLocal);
-        return;
-      }
-      playLocal();
     });
 
     document.getElementById("reset").addEventListener("click", () => {
-      if (audio) audio.pause();
-      if (synth) synth.stop();
-      synth = null; source = null; paused = false;
+      film.pause();
+      film.currentTime = 0;
       seal.classList.remove("is-gone");
       reveal.classList.remove("is-on");
       row.classList.remove("is-on");
       kicker.textContent = "uma nota apenas";
-      note.hidden = true;
     });
   </script>
 </body>
